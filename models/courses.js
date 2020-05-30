@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
-teacherSchema = new mongoose.Schema({
+courseSchema = new mongoose.Schema({
     name: {
         type: String,
         minlength: 3,
         maxlength: 15,
         unique: true,
-        required: true
+        required: true,
+        index:true
     },
     description: {
         type: String,
@@ -32,8 +33,8 @@ teacherSchema = new mongoose.Schema({
     teacher: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "teacher"
+        ref: "Teacher" //use Teacher model during population
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Teacher', teacherSchema);
+module.exports = mongoose.model('Course', courseSchema);
