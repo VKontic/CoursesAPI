@@ -22,8 +22,6 @@ teacherSchema = new mongoose.Schema({
         type: String,
         minlength:5,
         maxlength:35,
-        unique:true,
-        index:false
     },
     role: {
         required: true,
