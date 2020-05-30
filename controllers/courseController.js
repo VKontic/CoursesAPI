@@ -9,13 +9,13 @@ exports.create = (req, res) => {
 }
 
 exports.deleteOne = function(req, res) {
-	const name = req.params.name;
+    const name = req.params.name;
     Course.deleteOne({ name: name })
         .exec()
         .then(result => {
-        	if (result.deletedCount==0){
-        		res.status(404).json(result)
-        	}
+            if (result.deletedCount == 0) {
+                res.status(404).json(result)
+            }
             res.status(200).json(result)
         })
         .catch(err => {
@@ -24,15 +24,31 @@ exports.deleteOne = function(req, res) {
         })
 }
 
-exports.findByName = function(req,res){
-	const name = req.params.name;
-	Course.find({name: { $regex: '.*' + name + '.*', $options: 'i' } }).exec() // as LIKE %var% in sql
-	.then(result => {
-		res.status(200).json(result)
-	})
-	.catch(err => {
-		console.log(err);
-		res.status(500).json(err)
-	})
+exports.findByName = function(req, res) {
+    const name = req.params.name;
+    Course.find({ name: { $regex: '.*' + name + '.*', $options: 'i' } }).exec() // as LIKE %var% in sql
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err)
+        })
 }
 
+exports.updateByName = function(req, res) {
+    const name = req.params.name;
+    let updateObj = req.body;
+    console.log (typeof updateObj);
+    console.log(updateObj);
+    //updateObj will be like req.body object : {name: x, description: y, price: z}...
+    Course.findOneAndUpdate({ name: { $regex: '.*' + name + '.*', $options: 'i' } },{$set : req.body}, { "new": true})
+        .exec()
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err)
+        })
+}
