@@ -88,7 +88,7 @@ exports.deleteById = function(req, res) {
         })
 }
 
-exports.updateById = function(req,res){
+exports.updateById = function(req, res) {
     const ID = req.params.id;
     let updateObj = req.body;
     //updateObj will be like req.body object : {name: x, description: y, price: z}...
@@ -101,4 +101,28 @@ exports.updateById = function(req,res){
             console.log(err);
             res.status(500).json(err)
         })
+}
+
+exports.decSubs = async function(req, res) {
+    const ID = req.params.id;
+    try {
+        let result = await Course.findOneAndUpdate({ _id: ID }, { $inc: { 'quantity': -1 } }, { "new": true }).exec();
+        res.status(200).json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err)
+    }
+    //TODO:
+    //validate if quantity is 0. In that case dont decrement
+}
+
+exports.incSubs = async function(req, res) {
+    const ID = req.params.id;
+    try {
+        let result = await Course.findOneAndUpdate({ _id: ID }, { $inc: { 'quantity': 1 } }, { "new": true }).exec();
+        res.status(200).json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err)
+    }
 }

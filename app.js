@@ -23,6 +23,8 @@ app.delete('/course_id/:id', courseController.deleteById);
 app.get('/course_id/:id', courseController.findById);
 app.put('/course_id/:id', courseController.updateById);
 
+app.put('/subs_dec/:id', courseController.decSubs); //decrement course subs by 1 
+app.put('/subs_inc/:id', courseController.incSubs); //decrement course subs by 1
 
 mongoose.connect(process.env.DB_URL)
     .then(() => {
