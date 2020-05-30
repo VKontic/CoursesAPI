@@ -19,6 +19,11 @@ app.get('/course/:name', courseController.findByName);
 app.put('/course/:name', courseController.updateByName);
 app.get ('/products', courseController.findAll);
 
+app.delete('/course_id/:id', courseController.deleteById);
+app.get('/course_id/:id', courseController.findById);
+app.put('/course_id/:id', courseController.updateById);
+
+
 mongoose.connect(process.env.DB_URL)
     .then(() => {
         app.listen(process.env.PORT, (err) => {

@@ -39,8 +39,6 @@ exports.findByName = function(req, res) {
 exports.updateByName = function(req, res) {
     const name = req.params.name;
     let updateObj = req.body;
-    console.log(typeof updateObj);
-    console.log(updateObj);
     //updateObj will be like req.body object : {name: x, description: y, price: z}...
     Course.findOneAndUpdate({ name: { $regex: '.*' + name + '.*', $options: 'i' } }, { $set: req.body }, { "new": true })
         .exec()
@@ -61,4 +59,46 @@ exports.findAll = async function(req, res) {
         console.log(err);
         res.status(500).json(err)
     }
+}
+
+exports.findById = function(req, res) {
+    const ID = req.params.id;
+    Course.findById(ID).exec()
+        .then(result => {
+            res.status(200).json(result)
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json(err)
+        })
+}
+
+exports.deleteById = function(req, res) {
+    const ID = req.params.id;
+    Course.deleteOne({ _id: ID })
+        .exec()
+        .then(result => {
+            if (result.deletedCount == 0) {
+                res.status(404).json(result)
+            }
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+}
+
+exports.updateById = function(req,res){
+    const ID = req.params.id;
+    let updateObj = req.body;
+    //updateObj will be like req.body object : {name: x, description: y, price: z}...
+    Course.findOneAndUpdate({ _id: ID }, { $set: req.body }, { "new": true })
+        .exec()
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err)
+        })
 }
