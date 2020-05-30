@@ -1,4 +1,5 @@
 const Course = require('../models/courses.js');
+const querystring = require('querystring'); //for url parsing
 
 exports.create = (req, res) => {
     const courseObject = req.body;
@@ -7,9 +8,11 @@ exports.create = (req, res) => {
         .catch(err => res.status(500).json(err))
 }
 
+exports.decodeUri = function(req,res,next){
+	req.params.name = decodeURI(req.params.name);
+	next(); 
+}
 exports.deleteOne = function(req, res) {
-    const name = req.params.name;
-    //console.log(querystring.parse(name));
     Course.deleteOne({ name: name })
         .exec()
         .then(result => {
