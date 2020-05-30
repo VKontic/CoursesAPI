@@ -39,10 +39,10 @@ exports.findByName = function(req, res) {
 exports.updateByName = function(req, res) {
     const name = req.params.name;
     let updateObj = req.body;
-    console.log (typeof updateObj);
+    console.log(typeof updateObj);
     console.log(updateObj);
     //updateObj will be like req.body object : {name: x, description: y, price: z}...
-    Course.findOneAndUpdate({ name: { $regex: '.*' + name + '.*', $options: 'i' } },{$set : req.body}, { "new": true})
+    Course.findOneAndUpdate({ name: { $regex: '.*' + name + '.*', $options: 'i' } }, { $set: req.body }, { "new": true })
         .exec()
         .then(result => {
             res.status(200).json(result)
@@ -51,4 +51,14 @@ exports.updateByName = function(req, res) {
             console.log(err);
             res.status(500).json(err)
         })
+}
+
+exports.findAll = async function(req, res) {
+    try {
+        let result = await Course.find({}).exec();
+        res.status(200).json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err)
+    }
 }

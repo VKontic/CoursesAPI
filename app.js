@@ -17,6 +17,7 @@ app.post('/courses', courseController.create);
 app.delete('/course/:name', courseController.deleteOne);
 app.get('/course/:name', courseController.findByName);
 app.put('/course/:name', courseController.updateByName);
+app.get ('/products', courseController.findAll);
 
 mongoose.connect(process.env.DB_URL)
     .then(() => {
