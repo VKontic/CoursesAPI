@@ -12,15 +12,10 @@ mongoose.set('useUnifiedTopology', true);
 const app = express();
 app.use(json());
 
-console.log(decodeURI("http://localhost:5000/course/Kurs%203"));
 
-app.get('/', (req, res) => {
-    res.send("It works!")
-})
-
-app.post('/courses', courseController.create)
-app.delete('/course/:name', courseController.decodeUri ,courseController.deleteOne)
-
+app.post('/courses', courseController.create);
+app.delete('/course/:name', courseController.deleteOne);
+app.get('/course/:name', courseController.findByName);
 
 mongoose.connect(process.env.DB_URL)
     .then(() => {

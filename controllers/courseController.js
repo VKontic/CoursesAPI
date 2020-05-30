@@ -8,11 +8,8 @@ exports.create = (req, res) => {
         .catch(err => res.status(500).json(err))
 }
 
-exports.decodeUri = function(req,res,next){
-	req.params.name = decodeURI(req.params.name);
-	next(); 
-}
 exports.deleteOne = function(req, res) {
+	const name = req.params.name;
     Course.deleteOne({ name: name })
         .exec()
         .then(result => {
@@ -26,3 +23,16 @@ exports.deleteOne = function(req, res) {
             res.status(500).json(err);
         })
 }
+
+exports.findByName = function(req,res){
+	const name = req.params.name;
+	Course.find({name: { $regex: '.*' + name + '.*', $options: 'i' } }).exec() // as LIKE %var% in sql
+	.then(result => {
+		res.status(200).json(result)
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(500).json(err)
+	})
+}
+
