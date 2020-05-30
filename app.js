@@ -25,6 +25,8 @@ app.put('/course_id/:id', courseController.updateById);
 
 app.put('/subs_dec/:id', courseController.decSubs); //decrement course subs by 1 
 app.put('/subs_inc/:id', courseController.incSubs); //decrement course subs by 1
+app.get('/subs_num/:id', courseController.getQuantity);
+
 
 mongoose.connect(process.env.DB_URL)
     .then(() => {

@@ -126,3 +126,14 @@ exports.incSubs = async function(req, res) {
         res.status(500).json(err)
     }
 }
+
+exports.getQuantity = async function(req, res) {
+    const ID = req.params.id;
+    try {
+        let result = await Course.find({ _id: ID }).select({'quantity':1, _id:0});
+        res.status(200).json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err)
+    }
+}
