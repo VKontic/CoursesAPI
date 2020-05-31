@@ -11,13 +11,14 @@ const courseController = require("./controllers/courseController");
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
 
 require('dotenv').config()
 
 const app = express();
-app.use(json());
+app.use(express.urlencoded( {extended:false} )); //body parser 
+app.use(express.json()); //express.json = bodyParser.json;
 
-//courses
 app.post('/courses', courseController.create);
 app.delete('/course/:name', courseController.deleteOne);
 app.get('/course/:name', courseController.findByName);
