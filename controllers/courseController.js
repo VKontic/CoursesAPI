@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const Course = require('../models/courses.js');
 const querystring = require('querystring'); //for url parsing
 
