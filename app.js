@@ -36,7 +36,7 @@ app.put('/subs_inc/:id', courseController.incSubs); //decrement course subs by 1
 app.post('/teacher', teacherController.create);
 app.get('/teacher', teacherController.directSearchByUrl)
 app.delete('/teacher', teacherController.deleteCourse)
-app.put('/teacher/', teacherController.updateCourse);
+app.put('/teacher', teacherController.updateCourse);
 app.get('/teachers', teacherController.getAll);
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);

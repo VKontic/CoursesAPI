@@ -21,6 +21,7 @@ teacherSchema = new mongoose.Schema({
     },
     email: {
         required: true,
+        unique: true,
         type: String,
         minlength:5,
         maxlength:35,

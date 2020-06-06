@@ -18,6 +18,7 @@
   "homepage": "https://github.com/VKontic/CoursesAPI#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "mongoose": "^5.9.16"
   }
