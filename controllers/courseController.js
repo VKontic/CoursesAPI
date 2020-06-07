@@ -6,7 +6,6 @@ const csvWriter = require('csv-write-stream');
 const writer = csvWriter();
 const Course = require('../models/courses.js');
 const Teacher = require('../models/teacher.js');
-const querystring = require('querystring'); //for url parsing
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -92,7 +91,9 @@ exports.deleteOne = function(req, res) {
 }
 
 exports.findByName = function(req, res) {
-    const name = req.params.name;
+
+    const name = decodeURIComponent(req.params.name);
+
     Course.find({ name: { $regex: '.*' + name + '.*', $options: 'i' } }).exec() // as LIKE %var% in sql
         .then(result => {
             res.status(200).json(result)
@@ -101,6 +102,7 @@ exports.findByName = function(req, res) {
             console.log(err);
             res.status(500).json(err)
         })
+
 }
 
 exports.updateByName = function(req, res) {
