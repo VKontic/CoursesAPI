@@ -11,7 +11,7 @@ const courseController = require("./controllers/courseController");
 //auth middleware
 const authMiddleware = require('./authentication/authMiddleware')
 
-mongoose.set('useCreateIndex', true);
+mongoose.set('useCreateIndex', true)
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
@@ -34,10 +34,10 @@ app.put('/course_id/:id', courseController.updateById);
 app.put('/subs_dec/:id', courseController.decSubs); //decrement course subs by 1 
 app.put('/subs_inc/:id', courseController.incSubs); //decrement course subs by 1
 app.get('/subs_num/:id', courseController.getQuantity);
-
+app.get('/courses', courseController.LimitOffsetCourses);
 
 //teacher
-app.post('/teacher',teacherController.create);
+app.post('/teacher',teacherController.create); //create tacher, or append new course to teacher 
 
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);
@@ -46,10 +46,8 @@ app.put('/teacher/:username', teacherController.updateByUsername);
 app.get('/teacher', teacherController.directSearchByUrl) ;
 app.delete('/teacher', teacherController.deleteCourse);
 app.put('/teacher', teacherController.updateCourse);
-
 //auth middleware on this one for testing purposes
 app.get('/teachers',teacherController.getAll);
-
 
 //login
 app.get('/login', authMiddleware.generateToken);
