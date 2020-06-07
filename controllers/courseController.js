@@ -138,3 +138,20 @@ exports.getQuantity = async function(req, res) {
         res.status(500).json(err)
     }
 }
+
+exports.LimitOffsetCourses = async function (req, res){
+    let limit = req.query.limit;
+    let offset = req.query.offset;
+
+    if (limit !== undefined && offset !== undefined){
+        try{
+            let result = await Course.find({}).skip(parseInt(offset)).limit(parseInt(limit));
+            res.status(200).json(result);
+        } catch (err){
+            console.log(err);
+            res.status(400).json({"error":err.message});
+        }
+    }else {
+        res.status(406).json({"error":'Limit and offset params are not passed!'})
+    }
+}
