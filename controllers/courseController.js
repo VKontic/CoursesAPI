@@ -11,7 +11,7 @@ const querystring = require('querystring'); //for url parsing
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'vkontic11@gmail.com',
+        user: 'eduplatform2020@gmail.com',
         pass: process.env.PASSWORD
     }
 });
