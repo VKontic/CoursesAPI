@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+require('dotenv').config()
 const mongoose = require('mongoose');
 const express = require('express');
 const { json } = require('body-parser');
@@ -8,15 +8,13 @@ const { json } = require('body-parser');
 const teacherController = require("./controllers/teacherController");
 const courseController = require("./controllers/courseController");
 
-//middleware
+//auth middleware
 const authMiddleware = require('./authentication/authMiddleware')
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
-
-require('dotenv').config()
 
 const app = express();
 app.use(express.urlencoded( {extended:false} )); //body parser 
@@ -27,9 +25,7 @@ app.post('/courses', courseController.create);
 app.delete('/course/:name', courseController.deleteOne);
 app.get('/course/:name', courseController.findByName);
 app.put('/course/:name', courseController.updateByName);
-
-app.get ('/products', courseController.findAll); //all courses
-
+app.get ('/products', courseController.findAll); //get all courses
 //delete, get and update course by course ID
 app.delete('/course_id/:id', courseController.deleteById);
 app.get('/course_id/:id', courseController.findById);
@@ -42,16 +38,19 @@ app.get('/subs_num/:id', courseController.getQuantity);
 
 //teacher
 app.post('/teacher',teacherController.create);
-app.get('/teacher', teacherController.directSearchByUrl)
-app.delete('/teacher', teacherController.deleteCourse)
+
+app.get('/teacher/:username', teacherController.partialSearchByUsername);
+app.delete('/teacher/:username', teacherController.deleteByUsername);
+app.put('/teacher/:username', teacherController.updateUsername);//OVO NE RADI KAKO TREBA. 
+
+app.get('/teacher', teacherController.directSearchByUrl) ;
+app.delete('/teacher', teacherController.deleteCourse);
 app.put('/teacher', teacherController.updateCourse);
 
 //auth middleware on this one for testing purposes
 app.get('/teachers', authMiddleware.verifyToken, teacherController.getAll);
 
-app.get('/teacher/:username', teacherController.partialSearchByUsername);
-app.delete('/teacher/:username', teacherController.deleteByUsername);
-app.put('/teacher/:username', teacherController.updateUsername);
+
 
 //login
 app.get('/login', authMiddleware.generateToken);
