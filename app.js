@@ -11,7 +11,7 @@ const courseController = require("./controllers/courseController");
 //auth middleware
 const authMiddleware = require('./authentication/authMiddleware')
 
-mongoose.set('useCreateIndex', true);
+mongoose.set('useCreateIndex', true)
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
