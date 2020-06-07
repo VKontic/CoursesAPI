@@ -56,7 +56,7 @@ app.get('/login', authMiddleware.generateToken);
 
 app.get('/maxSalary', teacherController.maxSalary); //return max salary from courses for every teacher
 
-mongoose.connect(process.env.DB_URL, { useFindAndModify: false })
+mongoose.connect(process.env.MONGODB_URI, { useFindAndModify: false })
     .then(() => {
         app.listen(process.env.PORT, (err) => {
             err ? console.log("Server didnt start", err) : console.log("Server started on port:", process.env.PORT);
