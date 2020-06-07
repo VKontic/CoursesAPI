@@ -3,39 +3,25 @@
 const Teacher = require('../models/teacher.js');
 
 exports.create = async(req, res) => {
-
     try{
-
         //Create a teacher from body
         if(Object.keys(req.query).length === 0){
-
             res.status(201).json(await Teacher.create(req.body));
-
         //update teacher courses based on parameters
         } else if (req.query.username !== undefined && req.query.id !== undefined){
 
             //add unique course to the teacher
             const result = await Teacher.findOneAndUpdate(
-
                 { username: req.query.username },
                 { $addToSet: { course: req.query.id }}
-
             );
-
             res.status(200).json(result);
-               
         } else {
-            
             res.status(404).json({'error' : 'No data found!'});
-
         }
-
     } catch (err) {
-
         res.status(500).json(err);
-
     }
-
 }
 
 exports.getAll = async(req, res) =>{

@@ -19,16 +19,19 @@ const app = express();
 app.use(express.urlencoded( {extended:false} )); //body parser 
 app.use(express.json()); //express.json = bodyParser.json;
 
+//add course, delete, update or get course by name
 app.post('/courses', courseController.create);
 app.delete('/course/:name', courseController.deleteOne);
 app.get('/course/:name', courseController.findByName);
 app.put('/course/:name', courseController.updateByName);
-app.get ('/products', courseController.findAll);
 
+app.get ('/products', courseController.findAll); //all courses
+
+//delete, get and update course by course ID
 app.delete('/course_id/:id', courseController.deleteById);
 app.get('/course_id/:id', courseController.findById);
 app.put('/course_id/:id', courseController.updateById);
-
+//decrement, increment or get number of course subscribers
 app.put('/subs_dec/:id', courseController.decSubs); //decrement course subs by 1 
 app.put('/subs_inc/:id', courseController.incSubs); //decrement course subs by 1
 app.get('/subs_num/:id', courseController.getQuantity);
@@ -40,6 +43,7 @@ app.get('/teacher', teacherController.directSearchByUrl)
 app.delete('/teacher', teacherController.deleteCourse)
 app.put('/teacher/', teacherController.updateCourse);
 app.get('/teachers', teacherController.getAll);
+//get, delete or update teacher by username
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);
 app.put('/teacher/:username', teacherController.updateUsername);
