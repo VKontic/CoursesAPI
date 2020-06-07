@@ -8,6 +8,9 @@ const { json } = require('body-parser');
 const teacherController = require("./controllers/teacherController");
 const courseController = require("./controllers/courseController");
 
+//middleware
+const authMiddleware = require('./authentication/authMiddleware')
+
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -38,17 +41,20 @@ app.get('/subs_num/:id', courseController.getQuantity);
 
 
 //teacher
-app.post('/teacher', teacherController.create);
+app.post('/teacher',teacherController.create);
 app.get('/teacher', teacherController.directSearchByUrl)
 app.delete('/teacher', teacherController.deleteCourse)
-app.put('/teacher/', teacherController.updateCourse);
-app.get('/teachers', teacherController.getAll);
-//get, delete or update teacher by username
+app.put('/teacher', teacherController.updateCourse);
+
+//auth middleware on this one for testing purposes
+app.get('/teachers', authMiddleware.verifyToken, teacherController.getAll);
+
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);
 app.put('/teacher/:username', teacherController.updateUsername);
 
-
+//login
+app.get('/login', authMiddleware.generateToken);
 
 mongoose.connect(process.env.DB_URL, { useFindAndModify: false })
     .then(() => {
