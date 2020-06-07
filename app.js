@@ -17,7 +17,7 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
 
 const app = express();
-app.use(express.urlencoded( {extended:false} )); //body parser 
+app.use(express.urlencoded({ extended: false })); //body parser 
 app.use(express.json()); //express.json = bodyParser.json;
 
 //add course, delete, update or get course by name
@@ -25,7 +25,7 @@ app.post('/courses', courseController.create);
 app.delete('/course/:name', courseController.deleteOne);
 app.get('/course/:name', courseController.findByName);
 app.put('/course/:name', courseController.updateByName);
-app.get ('/products', courseController.findAll); //get all courses
+app.get('/products', courseController.findAll); //get all courses
 //delete, get and update course by course ID
 app.delete('/course_id/:id', courseController.deleteById);
 app.get('/course_id/:id', courseController.findById);
@@ -37,15 +37,16 @@ app.get('/subs_num/:id', courseController.getQuantity);
 app.get('/courses', courseController.LimitOffsetCourses);
 
 //teacher
-app.post('/teacher',teacherController.create); //create tacher, or append new course to teacher 
+app.post('/teacher', teacherController.create); //create tacher, or append new course to teacher 
 
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);
-app.put('/teacher/:username', teacherController.updateUsername);//OVO NE RADI KAKO TREBA. 
+app.put('/teacher/:username', teacherController.updateUsername); //OVO NE RADI KAKO TREBA. 
 
-app.get('/teacher', teacherController.directSearchByUrl) ;
+app.get('/teacher', teacherController.directSearchByUrl);
 app.delete('/teacher', teacherController.deleteCourse);
 app.put('/teacher', teacherController.updateCourse);
+
 //auth middleware on this one for testing purposes
 app.get('/teachers', authMiddleware.verifyToken, teacherController.getAll);
 

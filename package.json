@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "devStart": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,10 +18,12 @@
   },
   "homepage": "https://github.com/VKontic/CoursesAPI#readme",
   "dependencies": {
+    "csv-write-stream": "^2.0.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.16"
+    "mongoose": "^5.9.16",
+    "nodemailer": "^6.4.8"
   }
 }
