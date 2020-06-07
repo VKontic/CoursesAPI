@@ -54,6 +54,8 @@ app.get('/teachers',teacherController.getAll);
 //login
 app.get('/login', authMiddleware.generateToken);
 
+app.get('/maxSalary', teacherController.maxSalary); //return max salary from courses for every teacher
+
 mongoose.connect(process.env.DB_URL, { useFindAndModify: false })
     .then(() => {
         app.listen(process.env.PORT, (err) => {
