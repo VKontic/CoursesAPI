@@ -49,7 +49,7 @@ app.delete('/teacher', teacherController.deleteCourse);
 app.put('/teacher', teacherController.updateCourse);
 
 //auth middleware on this one for testing purposes
-app.get('/teachers',teacherController.getAll);
+app.get('/teachers',authMiddleware.verifyToken,teacherController.getAll);
 
 //login
 app.get('/login', authMiddleware.generateToken);
