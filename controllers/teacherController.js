@@ -5,7 +5,14 @@ const Teacher = require('../models/teacher.js');
 
 //function to validate teacher payload. username and email
 function validateCreateTeacherPayload(obj){
-    return  emailValidator.validate(obj['email']) && !/\s/.test(obj['username']) && !/\s/.test(obj['password']) ? true : false;
+    return  emailValidator.validate(obj['email']) && !/\s/.test(obj['username']) && !/\s/.test(obj['password']) &&
+                                                     /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/.test(obj['password']) ? 
+                                                     true : false;
+}
+
+//function to validate username
+function validateUsername(username){
+    return  !/\s/.test(username) ? true : false;
 }
 
 //hash password and encode to hex
@@ -131,19 +138,31 @@ exports.updateCourse = async(req, res) => {
         }
 }
 
-exports.updateUsername = async(req, res) => {
+exports.updateByUsername = async(req, res) => {
+
     try{
+
+        let payload = {}
+        if(req.body.username !== undefined && req.body.email !== undefined && emailValidator.validate(req.body.email) && validateUsername(req.body.username)){
+            payload = { username: req.body.username, email: req.body.email} 
+        } else if (req.body.username !== undefined && validateUsername(req.body.username)){
+            payload = { username: req.body.username}
+        } else if (req.body.email !== undefined && emailValidator.validate(req.body.email)){
+            payload = { email: req.body.email} 
+        }
+
         const result = await Teacher.findOneAndUpdate(
             { username: req.params.username },
-            { $set: { username: req.body.username} },
+            { $set: payload },
             { new: true }
         );
-       
-        if(result === null){
+            
+        if(Object.keys(payload).length === 0){
             res.status(500).json({"error" : "Illegal parameters passed!"})
         } else{
-            res.status(200).json({"success" : "Successfully updated the username!"});
+            res.status(200).json({"success" : "Update was successful!"});
         }
+
     } catch (err) {
        res.status(500).json(err)
     }

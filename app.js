@@ -41,15 +41,14 @@ app.post('/teacher',teacherController.create);
 
 app.get('/teacher/:username', teacherController.partialSearchByUsername);
 app.delete('/teacher/:username', teacherController.deleteByUsername);
-app.put('/teacher/:username', teacherController.updateUsername);//OVO NE RADI KAKO TREBA. 
+app.put('/teacher/:username', teacherController.updateByUsername);
 
 app.get('/teacher', teacherController.directSearchByUrl) ;
 app.delete('/teacher', teacherController.deleteCourse);
 app.put('/teacher', teacherController.updateCourse);
 
 //auth middleware on this one for testing purposes
-app.get('/teachers', authMiddleware.verifyToken, teacherController.getAll);
-
+app.get('/teachers',teacherController.getAll);
 
 
 //login
